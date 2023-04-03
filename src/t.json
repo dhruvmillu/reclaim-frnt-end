@@ -1,0 +1,12 @@
+{
+  "id": "6c273dfa-9c42-4bbd-aab4-5f00a2e72947",
+  "name": "sticksandstacks",
+  "callbackUrl": "http://localhost:3000/callback/user-0df4a5d7-fc8d-4ea2-ba36-3301c4925688",
+  "publicKey": "0x04af459df124d777eb5c2af4cf25519c198f205dc8497e69c1f863aed59a8e61bd3dd59f2249248a32d2710719028a18986e1af7449dbfc73e0021ed42fa2a2a84",
+  "claims": [
+    {
+      "provider": "github-contributor",
+      "params": { "repo": "https://github.com/dhruvmillu/AniChat" }
+    }
+  ]
+}
