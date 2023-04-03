@@ -4,7 +4,7 @@ import { Reclaim, generateUuid } from '@reclaimprotocol/reclaim-sdk';
 import { addRepo } from './githubActions';
 import { auth,db } from '../firebase';
 import { doc, updateDoc } from "firebase/firestore"; 
-const callbackUrl = "https://sticksandstacks.web.app/" + '/callback/'
+const callbackUrl = "https://stickandstack.web.app/" + '/callback/'
 const reclaim = new Reclaim(callbackUrl)
 
 
@@ -37,7 +37,7 @@ export const makeClaim = async (repoName) => {
 
 
 export const verifyClaim = async (id) => {
-    const data = id.split("@(.*)")
+    const data = id.split(/[@](.*)/)
     console.log(data)
     const docRef = updateDoc(doc(db, "users", data[1],"repo",data[0]), {
         status:"verified"

@@ -49,7 +49,7 @@ function Embedded(){
         </div>
        }
         <button onClick ={()=> githubSignIn()} className="bg-indigo-500 font text-violet-50 rounded p-[10px] m-[10px] ">Github SignIn</button>
-        <TextField id="outlined-basic" onChange = {(evt) => setRepoName(evt.target.value)}  helperText="format (username/repo)" label="Repo name" variant="outlined" color="warning" />
+        <TextField id="outlined-basic" onChange = {(evt) => setRepoName(evt.target.value)}  helperText="format l (username/repo)" label="Repo name" variant="outlined" color="warning" />
         <button disabled={repoName.length == 3} onClick={()=>putClaim()} className="bg-indigo-500 font text-violet-50 rounded p-[10px] m-[10px] ">Claim repo</button>
         
       </header>
@@ -78,8 +78,7 @@ function ExitScreen() {
     return (
       <div className="App">
       <header className="App-header">
-        {x.id}
-        {d=="okay"?"You can close this window":"Please wait do not close this window"}
+        {d=="okay"?"You can close this window, the repo is claimed":"Please wait do not close this window"}
         </header>
         </div>
     )
