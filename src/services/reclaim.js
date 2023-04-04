@@ -29,7 +29,7 @@ export const makeClaim = async (repoName) => {
       const uri = template.url
         console.log(uri,callbackId)
       const templateId = template.id
-      addRepo(repoName)
+      addRepo(repoName,templateId,callbackId)
       return { uri, callbackId }
 
 

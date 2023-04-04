@@ -6,51 +6,38 @@ import { Route,Routes } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import QRCode  from 'qrcode';
 import { useState,useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams,useNavigate } from 'react-router-dom';
+import Profile from './components/profile';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
+import QuestionPlatform from './components/questionplatform';
 
 
 function Embedded(){
 
-  const [repoName,setRepoName] = useState("")
-  const [qr,setQr]= useState(null)
-  const [appUrl,setAppUrl] = useState("")
-  const [tid,setTID] = useState("")
-
-  const putClaim = async () => {
-     const {uri, callbackId } = await makeClaim(repoName)
-     console.log(uri, callbackId)
-     QRCode.toDataURL(uri, (err, url) => {
-      setQr(url)
-      setAppUrl(uri)
-      setTID(callbackId)
+  const navigate = useNavigate();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) =>{
+        if(user){
+            navigate('/profile')
+        }
+        else{
+            console.log("no user")
+            navigate('/')
+        }
     })
-  }
+  },[])
 
+
+  
 
   return (
 
 
     <div className="App">
-      <header className="App-header">
-      {qr &&
-        <div>
-          <div className='flex flex-col justify-center items-center'>
-            <p>scan Image to open Reclaim Wallet</p>
-            <img src={qr} className="h-80 w-80" />
-          </div>
-          <div className='flex flex-col justify-center'>
-            <p>On Mobile app <a href={appUrl} className="text-indigo-500 hover:text-violet-900 duration-500 font-bold">click here</a> to open wallet </p>
-          </div>
-          <div className='flex flex-col justify-center'>
-            <p><a className="text-indigo-500 hover:text-violet-900 duration-500 font-bold" href={"https://drive.google.com/file/d/1S2l2zT-5Um-W3bND69_6l_ubTZus9ryT/view?usp=drivesdk "}>click here</a> to download the app</p>
-          </div>
-          
-        </div>
-       }
+      <header className="w-screen h-screen flex justify-center items-center text-[30px]">
+      
         <button onClick ={()=> githubSignIn()} className="bg-indigo-500 font text-violet-50 rounded p-[10px] m-[10px] ">Github SignIn</button>
-        <TextField id="outlined-basic" onChange = {(evt) => setRepoName(evt.target.value)}  helperText="format l (username/repo)" label="Repo name" variant="outlined" color="warning" />
-        <button disabled={repoName.length == 3} onClick={()=>putClaim()} className="bg-indigo-500 font text-violet-50 rounded p-[10px] m-[10px] ">Claim repo</button>
         
       </header>
 
@@ -93,6 +80,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Embedded/>} />
       <Route path="/callback/:id" element={<ExitScreen/>} />
+      <Route path="/profile" element={<Profile/>} />
+      <Route path="/QueryDesk" element={<QuestionPlatform/>} />
     </Routes>
 
   );

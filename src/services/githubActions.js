@@ -9,13 +9,14 @@ export const addUser = async () => {
     const makeData = await setDoc(doc(db,"users",user.email),{
         email:user.email,
         name:user.displayName,
+        reputation:0
     },{merge:true})
     console.log("added User")
 }
 
 
 
-export const addRepo = async (repoName) => {
+export const addRepo = async (repoName,templateId,callbackId) => {
     const dummy = (i) => {return i}
     const user = auth.currentUser;
     const repo_data = await fetch("https://api.github.com/repos/"+repoName)
@@ -37,7 +38,7 @@ export const addRepo = async (repoName) => {
     },{merge:true})
     
     const repoData = await setDoc(doc(db, "users", user.email,"repo",data.name), {
-        lang_data,"forkCount":data.forks_count,status:"pending"
+        lang_data,"forkCount":data.forks_count,status:"pending",templateId,callbackId,url:"https://github.com/"+repoName
       });
       console.log("added repo")
 }
