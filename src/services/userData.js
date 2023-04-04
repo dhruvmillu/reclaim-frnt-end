@@ -18,5 +18,5 @@ export const getClaimData = async (email) => {
 
 export const getUser = async (email) => {
     const data = await getDoc(doc(db, "users", email));
-    return data
+    return data.data()
 }

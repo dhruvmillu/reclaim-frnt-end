@@ -29,6 +29,7 @@ function Profile() {
   const [claimData, setClaimData] = useState(null);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [open, setOpen] = React.useState(false);
+  const [lang,setLang] = React.useState({});
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -49,7 +50,10 @@ function Profile() {
   };
 
   const getuser = async (email) => {
-    setUserd(await getUser(email))
+    const d = await getUser(email)
+    console.log(d.language)
+    setLang(d.language)
+    setUserd(d)
 }
 
   const pullData = async (user) => {
@@ -72,6 +76,11 @@ function Profile() {
   }, []);
 
 
+  useEffect(() => {
+    console.log(lang)
+  },[lang]);
+
+
   return (
     <div className="w-full">
       <NavBar />
@@ -85,22 +94,23 @@ function Profile() {
           <Embedded reponame={selectedRepo} />
         </Modal>
       </div>
-      <div className="flex">
-        <div className="m-[10px] p-[10px] rounded-[10px] min-w-[500px] text-[25px] text-white h-fit bg-indigo-500">
+      <div className="flex justify-center mt-[40px]">
+        <div className="m-[30px] p-[10px] rounded-[10px] min-w-[500px] text-[20px] text-white h-fit bg-indigo-500">
             <div  className="mt-[20px]">
-                <span className="font-bold">Name: </span>{userD && userD?.data().name}
+                <span className="font-bold">Name: </span>{userD && userD?.name}
             </div>
             <div  className="mt-[20px]">
-                <span className="font-bold">Email: </span>{userD?.data().email}
+                <span className="font-bold">Email: </span>{userD?.email}
 
             </div>
             <div  className="mt-[20px]">
                 <span className="font-bold">Language Score: </span>
                 <div className="ml-[20px]">
-                    {userD && Object.keys(userD?.data().language).map((item,i) => (
+                    {console.log(userD)}
+                    {lang && Object.keys(lang).map((item,i) => (
                         <div key={i}>
                             <span className="font-semibold">{item}: </span>
-                            <span>{userD?.data().language[item]}</span>
+                            <span>{userD?.language[item]}</span>
                             </div>))}
                 </div>
 
@@ -143,7 +153,7 @@ function Profile() {
             >
               <div>
                 <p className="font-bold">{item.id}</p>
-                <p className="text-[15px]">forks: {item.data.forks}</p>
+                <p className="text-[15px]">forks: {item.data.forkCount}</p>
                 <a href={item.data.url} className="text-[15px]" target="_blank">
                   Visit Repository
                 </a>
